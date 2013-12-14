@@ -5,13 +5,21 @@ namespace LD
 {
 	BaseGameEntityRenderable2D::BaseGameEntityRenderable2D( ) :
 		m_pTexture( LD_NULL ),
-		m_pRenderer( LD_NULL )
+		m_pRenderer( LD_NULL ),
+		BaseGameEntity::BaseGameEntity( )
 	{
 	}
 
 	BaseGameEntityRenderable2D::~BaseGameEntityRenderable2D( )
 	{
 		SDL_DestroyTexture( m_pTexture );
+	}
+
+	LD_UINT32 BaseGameEntityRenderable2D::Initialise( )
+	{
+		m_Types |= LD_RENDERABLE_2D;
+
+		return LD_OK;
 	}
 
 	LD_UINT32 BaseGameEntityRenderable2D::LoadTexture(
@@ -46,14 +54,13 @@ namespace LD
 		return LD_OK;
 	}
 
-	LD_UINT32 BaseGameEntityRenderable2D::GetType( ) const
-	{
-		return LD_RENDERABLE_2D;
-	}
-
 	void BaseGameEntityRenderable2D::Render( )
 	{
-		SDL_RenderCopy( m_pRenderer, m_pTexture, NULL, &m_TextureRectangle );
+		if( m_pTexture )
+		{
+			SDL_RenderCopy( m_pRenderer, m_pTexture, NULL,
+				&m_TextureRectangle );
+		}
 	}
 }
 

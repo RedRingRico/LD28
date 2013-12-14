@@ -29,5 +29,5 @@ namespace LD
 	};
 }
 
-#endif
+#endif // __LD_GAME_HPP__
 

@@ -1,5 +1,5 @@
-#ifndef __LD_BASEGAMEENTITY2D_HPP__
-#define __LD_BASEGAMEENTITY2D_HPP__
+#ifndef __LD_BASEGAMEENTITYRENDERABLE2D_HPP__
+#define __LD_BASEGAMEENTITYREMDERABLE2D_HPP__
 
 #include <BaseGameEntity.hpp>
 #include <SDL2/SDL.h>
@@ -13,13 +13,15 @@ namespace LD
 		BaseGameEntityRenderable2D( );
 		virtual ~BaseGameEntityRenderable2D( );
 
+		virtual LD_UINT32 Initialise( );
+
 		LD_UINT32 LoadTexture( const LD_CHAR8 *p_pFileName );
 
 		LD_UINT32 SetRenderer( SDL_Renderer *p_pRenderer );
 
-		virtual LD_UINT32 GetType( ) const;
+		void SetPosition( const LD_SINT32 p_X, const LD_SINT32 p_Y );
 
-		void Render( );
+		virtual void Render( );
 
 	protected:
 		SDL_Texture		*m_pTexture;
@@ -30,5 +32,5 @@ namespace LD
 	};
 }
 
-#endif
+#endif // __LD_BASEGAMEENTITYRENDERABLE2D_HPP__
 

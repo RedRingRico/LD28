@@ -10,17 +10,21 @@ namespace LD
 	class BaseGameEntity
 	{
 	public:
-		virtual ~BaseGameEntity( ){ }
+		BaseGameEntity( );
+		virtual ~BaseGameEntity( );
+
+		virtual LD_UINT32 Initialise( ) = 0;
+
+		LD_UINT32 GetType( ) const;
 
 		void SetID( const LD_UINT32 p_ID );
 		LD_UINT32 GetID( ) const;
 
-		virtual LD_UINT32 GetType( ) const = 0;
-
 	protected:
 		LD_UINT32 m_ID;
+		LD_UINT32 m_Types;
 	};
 }
 
-#endif
+#endif // __LD_BASEGAMEENTITY_HPP__
 

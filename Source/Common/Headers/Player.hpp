@@ -11,9 +11,11 @@ namespace LD
 		Player( );
 		virtual ~Player( );
 
+		void SetVelocity( const LD_SINT32 p_X, const LD_SINT32 p_Y );
+
 	private:
 	};
 }
 
-#endif
+#endif // __LD_PLAYER_HPP__
 

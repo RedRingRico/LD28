@@ -23,5 +23,5 @@ namespace LD
 	};
 }
 
-#endif
+#endif // __LD_GAMEENTITYMANAGER_HPP__
 

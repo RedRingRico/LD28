@@ -2,6 +2,8 @@
 #include <GitVersion.hpp>
 #include <cstring>
 #include <cstdio>
+#include <GameEntityManager.hpp>
+#include <Player.hpp>
 
 namespace LD
 {
@@ -40,12 +42,17 @@ namespace LD
 			SDL_RENDERER_ACCELERATED );
 
 		SDL_SetRenderDrawColor( m_pRenderer, 0x20, 0x00, 0x20, 0xFF );
+
+		m_pGameEntityManager = new GameEntityManager( );
 		
 		return LD_OK;
 	}
 
 	LD_UINT32 Game::Execute( )
 	{
+		Player Hiro;
+		m_pGameEntityManager->AddEntity( &Hiro );
+
 		while( m_Run )
 		{
 			SDL_Event Event;
@@ -78,6 +85,7 @@ namespace LD
 	void Game::Render( )
 	{
 		SDL_RenderClear( m_pRenderer );
+		m_pGameEntityManager->Render( );
 		SDL_RenderPresent( m_pRenderer );
 	}
 }
