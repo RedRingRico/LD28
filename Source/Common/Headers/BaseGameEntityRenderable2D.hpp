@@ -10,11 +10,14 @@ namespace LD
 	class BaseGameEntityRenderable2D : public BaseGameEntity
 	{
 	public:
-		virtual ~BaseGameEntityRenderable2D( ){ }
+		BaseGameEntityRenderable2D( );
+		virtual ~BaseGameEntityRenderable2D( );
 
 		LD_UINT32 LoadTexture( const LD_CHAR8 *p_pFileName );
 
 		LD_UINT32 SetRenderer( SDL_Renderer *p_pRenderer );
+
+		virtual LD_UINT32 GetType( ) const;
 
 		void Render( );
 

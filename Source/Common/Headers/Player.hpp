@@ -10,6 +10,7 @@ namespace LD
 	public:
 		Player( );
 		virtual ~Player( );
+
 	private:
 	};
 }

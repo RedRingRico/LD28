@@ -2,7 +2,8 @@
 
 namespace LD
 {
-	Player::Player( )
+	Player::Player( ) :
+		BaseGameEntityRenderable2D::BaseGameEntityRenderable2D( )
 	{
 	}
 

@@ -8,12 +8,15 @@ namespace LD
 	Game::Game( ) :
 		m_pRenderer( LD_NULL ),
 		m_pWindow( LD_NULL ),
+		m_pGameEntityManager( LD_NULL ),
 		m_Run( LD_TRUE )
 	{
 	}
 
 	Game::~Game( )
 	{
+		ldSafeDelete( m_pGameEntityManager );
+
 		SDL_DestroyRenderer( m_pRenderer );
 		SDL_DestroyWindow( m_pWindow );
 

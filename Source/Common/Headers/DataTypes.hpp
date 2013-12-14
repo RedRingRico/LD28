@@ -17,6 +17,10 @@
 
 #include <Compiler.hpp>
 
+#define ldSafeDelete( Pointer )\
+	{ if( Pointer )\
+		{ delete Pointer; Pointer = LD_NULL; } }
+
 typedef LD_UINT32	LD_BOOL;
 
 typedef float	LD_FLOAT32;

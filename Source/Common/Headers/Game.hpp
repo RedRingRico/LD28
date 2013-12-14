@@ -6,6 +6,7 @@
 
 namespace LD
 {
+	class GameEntityManager;
 	class Game
 	{
 	public:
@@ -23,6 +24,8 @@ namespace LD
 
 		SDL_Renderer	*m_pRenderer;
 		SDL_Window		*m_pWindow;
+
+		GameEntityManager	*m_pGameEntityManager;
 	};
 }
 
