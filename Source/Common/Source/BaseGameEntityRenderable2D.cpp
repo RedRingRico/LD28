@@ -50,7 +50,7 @@ namespace LD
 		}
 
 		m_pRenderer = p_pRenderer;
-
+ 
 		return LD_OK;
 	}
 
@@ -58,8 +58,13 @@ namespace LD
 	{
 		if( m_pTexture )
 		{
-			SDL_RenderCopy( m_pRenderer, m_pTexture, NULL,
-				&m_TextureRectangle );
+			SDL_Rect Middle;
+			Middle.x = 640-32;
+			Middle.y = 320-32;
+			Middle.w = 64;
+			Middle.h = 64;
+			SDL_RenderCopy( m_pRenderer, m_pTexture, &m_TextureRectangle,
+				&Middle );
 		}
 	}
 }

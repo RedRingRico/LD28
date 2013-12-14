@@ -44,6 +44,7 @@ namespace LD
 		SDL_SetRenderDrawColor( m_pRenderer, 0x20, 0x00, 0x20, 0xFF );
 
 		m_pGameEntityManager = new GameEntityManager( );
+		m_pGameEntityManager->SetRenderer( m_pRenderer );
 		
 		return LD_OK;
 	}

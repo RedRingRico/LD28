@@ -4,6 +4,8 @@
 #include <DataTypes.hpp>
 #include <vector>
 
+struct SDL_Renderer;
+
 namespace LD
 {
 	class BaseGameEntity;
@@ -14,12 +16,15 @@ namespace LD
 		GameEntityManager( );
 		~GameEntityManager( );
 
+		LD_UINT32 SetRenderer( SDL_Renderer *p_pRenderer );
+
 		LD_UINT32 AddEntity( BaseGameEntity *p_pEntity );
 
 		void Render( );
 
 	private:
 		std::vector< BaseGameEntity * > m_Entities;
+		SDL_Renderer *m_pRenderer;
 	};
 }
 

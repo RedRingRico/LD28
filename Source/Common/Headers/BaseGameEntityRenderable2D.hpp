@@ -23,6 +23,8 @@ namespace LD
 
 		virtual void Render( );
 
+		virtual LD_UINT32 LoadContent( ) = 0;
+
 	protected:
 		SDL_Texture		*m_pTexture;
 		SDL_Renderer	*m_pRenderer;
