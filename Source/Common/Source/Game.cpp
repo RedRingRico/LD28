@@ -1,4 +1,7 @@
 #include <Game.hpp>
+#include <GitVersion.hpp>
+#include <cstring>
+#include <cstdio>
 
 namespace LD
 {
@@ -13,12 +16,23 @@ namespace LD
 	{
 		SDL_DestroyRenderer( m_pRenderer );
 		SDL_DestroyWindow( m_pWindow );
+
+		SDL_Quit( );
 	}
 
 	LD_UINT32 Game::Initialise( )
 	{
-		m_pWindow = SDL_CreateWindow( "Red Ring Rico's Ludum Dare #28 Entry",
-			0, 0, 800, 600, 0 );
+		SDL_SetMainReady( );
+		SDL_Init( SDL_INIT_EVERYTHING );
+		char Title[ 1024 ];
+		memset( Title, '\0', sizeof( Title ) );
+		sprintf( Title, "Red Ring Rico's Ludum Dare #28 Entry "
+			"[Build: %s]", GIT_COMMITHASH );
+
+		m_pWindow = SDL_CreateWindow( Title,
+			SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 1280, 720,
+			SDL_WINDOW_OPENGL | SDL_WINDOW_INPUT_GRABBED |
+			SDL_WINDOW_MAXIMIZED );
 		m_pRenderer = SDL_CreateRenderer( m_pWindow, -1,
 			SDL_RENDERER_ACCELERATED );
 

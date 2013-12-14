@@ -30,7 +30,7 @@ UNAME_MACHINE	= $(shell uname -m)
 
 CPPFLAGS_EXT	= -ffriend-injection -std=c++0x
 SYSIPATH	= 
-SYSLIBS		= -lSDL2
+SYSLIBS		= -lSDL2 -lSDL2_image
 LINKFLAGS	=
 ##### Check for forced 32-bit or 64-bit builds ################################
 ifneq ($(64BIT), False)
@@ -55,7 +55,7 @@ CPPFLAGS	=	-c -m$(BITSIZE) -DLD_BUILD_$(BUILD_DEF) \
 				-DLD_PLATFORM_$(BUILD_PLATFORM)_$(BUILD_ARCH) \
 				-DLD_PLATFORM_$(BUILD_PLATFORM)_$(BUILD_ARCH)_$(BITSIZE) \
 				-DLD_BITSIZE_$(BITSIZE) -DLD_ARCH_$(BUILD_ARCH) \
-				-DLD_ARCH_$(BUILD_ARCH)_$(BITSIZE) \
+				-DLD_ARCH_$(BUILD_ARCH)_$(BITSIZE) -DSDL_MAIN_HANDLED \
 				-I$(TOPSRC)/Windows/Headers -I$(TOPSRC)/Common/Headers
 SYSIPATH	=
 INCPATH		=
