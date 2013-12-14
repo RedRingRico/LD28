@@ -6,6 +6,11 @@ namespace LD
 	LD_UINT32 BaseGameEntityRenderable2D::LoadTexture(
 		const LD_CHAR8 *p_pFileName )
 	{
+		if( m_pRenderer == LD_NULL )
+		{
+			return LD_FAIL;
+		}
+
 		m_pTexture = IMG_LoadTexture( m_pRenderer, p_pFileName );
 		SDL_QueryTexture( m_pTexture, LD_NULL, LD_NULL, &m_TextureWidth,
 			&m_TextureHeight );
