@@ -40,7 +40,7 @@ namespace LD
 			EventData *p_pEventData );
 		virtual ~Event( );
 
-		template< typename T > T* Data( ) const
+		template< typename T > T* GetData( ) const
 			{ return reinterpret_cast < T* >( m_pData ); }
 
 	protected:
