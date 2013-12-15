@@ -22,6 +22,10 @@ namespace LD
 		return LD_OK;
 	}
 
+	void BaseGameEntityRenderable2D::Update( const LD_UINT64 p_ElapsedTime )
+	{
+	}
+
 	LD_UINT32 BaseGameEntityRenderable2D::LoadTexture(
 		const LD_CHAR8 *p_pFileName )
 	{

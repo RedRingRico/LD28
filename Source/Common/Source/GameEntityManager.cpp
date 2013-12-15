@@ -66,5 +66,17 @@ namespace LD
 			++EntityItr;
 		}
 	}
+
+	void GameEntityManager::Update( const LD_UINT64 p_ElapsedTime )
+	{
+		std::vector< BaseGameEntity * >::iterator EntityItr =
+			m_Entities.begin( );
+
+		while( EntityItr != m_Entities.end( ) )
+		{
+			( *EntityItr )->Update( p_ElapsedTime );
+			++EntityItr;
+		}
+	}
 }
 

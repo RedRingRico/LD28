@@ -14,6 +14,7 @@ namespace LD
 		virtual ~BaseGameEntity( );
 
 		virtual LD_UINT32 Initialise( ) = 0;
+		virtual void Update( LD_UINT64 p_ElapsedTime ) = 0;
 
 		LD_UINT32 GetType( ) const;
 

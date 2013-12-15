@@ -22,6 +22,8 @@ namespace LD
 
 		void Render( );
 
+		void Update( const LD_UINT64 p_ElapsedTime );
+
 	private:
 		std::vector< BaseGameEntity * > m_Entities;
 		SDL_Renderer *m_pRenderer;

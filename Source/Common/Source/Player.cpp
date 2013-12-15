@@ -23,6 +23,11 @@ namespace LD
 		return LD_OK;
 	}
 
+	void Player::Update( const LD_UINT64 p_ElapsedTime )
+	{
+		BaseGameEntityRenderable2D::Update( p_ElapsedTime );
+	}
+
 	void Player::SetVelocity( const LD_SINT32 p_X, const LD_SINT32 p_Y )
 	{
 	}

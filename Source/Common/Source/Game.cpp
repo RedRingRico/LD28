@@ -4,6 +4,7 @@
 #include <cstdio>
 #include <GameEntityManager.hpp>
 #include <Player.hpp>
+#include <Time.hpp>
 
 namespace LD
 {
@@ -54,6 +55,9 @@ namespace LD
 		Player Hiro;
 		m_pGameEntityManager->AddEntity( &Hiro );
 
+		LD::Time Timer;
+		Timer.StartTimer( );
+
 		while( m_Run )
 		{
 			SDL_Event Event;
@@ -72,15 +76,16 @@ namespace LD
 				}
 			}
 
-			this->Update( );
+			this->Update( Timer.GetTimeInMicroseconds( ) );
 			this->Render( );
 		}
 
 		return LD_OK;
 	}
 
-	void Game::Update( )
+	void Game::Update( const LD_UINT64 p_ElapsedTime )
 	{
+		m_pGameEntityManager->Update( p_ElapsedTime );
 	}
 
 	void Game::Render( )

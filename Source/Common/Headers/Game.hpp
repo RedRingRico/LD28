@@ -17,7 +17,7 @@ namespace LD
 		LD_UINT32 Execute( );
 
 	private:
-		void Update( );
+		void Update( const LD_UINT64 p_ElapsedTime );
 		void Render( );
 		
 		LD_BOOL	m_Run;

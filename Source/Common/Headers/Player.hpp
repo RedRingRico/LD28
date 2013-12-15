@@ -13,6 +13,8 @@ namespace LD
 
 		virtual LD_UINT32 Initialise( );
 
+		virtual void Update( const LD_UINT64 p_ElapsedTime );
+
 		void SetVelocity( const LD_SINT32 p_X, const LD_SINT32 p_Y );
 
 		virtual LD_UINT32 LoadContent( );

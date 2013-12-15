@@ -15,6 +15,8 @@ namespace LD
 
 		virtual LD_UINT32 Initialise( );
 
+		virtual void Update( const LD_UINT64 p_ElapsedTime );
+
 		LD_UINT32 LoadTexture( const LD_CHAR8 *p_pFileName );
 
 		LD_UINT32 SetRenderer( SDL_Renderer *p_pRenderer );
