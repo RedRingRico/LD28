@@ -26,14 +26,6 @@ namespace LD
 		m_MillisecondsFrequency = Frequency / 1000ULL;
 		m_MicrosecondsFrequency = LD_FLOAT64( Frequency / 1000000.0d );
 
-
-		SDL_Log( "Seconds freq.: %llu\n", m_SecondsFrequency );
-		SDL_Log( "Millisec: %llu\n", m_MillisecondsFrequency );
-		SDL_Log( "Micro: %llu\n", m_MicrosecondsFrequency );
-
-		LD_FLOAT64 Microseconds = LD_FLOAT64( m_SecondsFrequency / 1000000.0d );
-		SDL_Log( "Micro (F): %lf\n", Microseconds );
-
 		return LD_TRUE;
 	}
 

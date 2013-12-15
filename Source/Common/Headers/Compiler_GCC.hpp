@@ -31,5 +31,8 @@ typedef int64_t			LD_SINT64;
 #define LD_CPPVER_98
 #endif // LD_GCCVER
 
+#define LD_EXPLICIT	explicit
+#define LD_INLINE	inline
+
 #endif // __LD_COMPILER_GCC_HPP__
 

@@ -8,8 +8,10 @@ namespace LD
 	class EventType
 	{
 	public:
-		EventType( const LD_CHAR8 *p_pName );
+		LD_EXPLICIT EventType( const LD_CHAR8 *p_pName );
 		virtual ~EventType( );
+
+		void SetID( const LD_CHAR8 *p_pName );
 
 		LD_UINT32 GetID( ) const;
 		char *GetName( ) const;
@@ -34,10 +36,16 @@ namespace LD
 	class Event
 	{
 	public:
-		Event( const LD_CHAR8 *p_EventName , const LD_UINT64 p_DispatchTime );
+		LD_EXPLICIT Event( const LD_CHAR8 *p_EventName,
+			EventData *p_pEventData );
 		virtual ~Event( );
 
+		template< typename T > T* Data( ) const
+			{ return reinterpret_cast < T* >( m_pData ); }
+
 	protected:
+		EventType	m_Type;
+		EventData	*m_pData;
 	};
 }
 
