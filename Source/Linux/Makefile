@@ -147,9 +147,12 @@ $(TARGET): $(OBJS)
 	@$(CPP) -o $(OUTFILE) $(LINKFLAGS) -m$(BITSIZE) $(OBJS) $(SYSLPATH) \
 	$(LIBPATH) $(LIBS) $(SYSLIBS) 2> lmsgs;\
 	RETVAL=$$?;\
-	if [ $$COLORSUPPORT -gt -1 ]; then\
-		cat $*.cmsgs | sed ''/error/s//`printf "\033[31merror\033[0m"`/'' > $*.cmsgs;\
-		cat $*.cmsgs | sed ''/warning/s//`printf "\033[34mwarning\033[0m"`/'' > $*.cmsgs;\
+	if env | grep -q ^TERM=; then\
+		COLORSUPPORT=`tput colors`;\
+		if [ $$COLORSUPPORT -gt -1 ]; then\
+			cat lmsgs | sed ''/error/s//`printf "\033[31merror\033[0m"`/'' > lmsgs;\
+			cat lmsgs | sed ''/warning/s//`printf "\033[34mwarning\033[0m"`/'' > lmsgs;\
+		fi;\
 	fi;\
 	if [[ $$RETVAL == 0 ]]; then\
 		printf "[OK]\n";\
