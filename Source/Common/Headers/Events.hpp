@@ -9,14 +9,17 @@ namespace LD
 	{
 	public:
 		LD_EXPLICIT EventType( const LD_CHAR8 *p_pName );
-		virtual ~EventType( );
+		~EventType( );
 
 		void SetID( const LD_CHAR8 *p_pName );
 
 		LD_UINT32 GetID( ) const;
 		char *GetName( ) const;
 
-	protected:
+		bool operator<( const EventType &p_Other ) const;
+		bool operator==( const EventType &p_Other ) const;
+
+	private:
 		LD_UINT32	m_ID;
 		LD_CHAR8	*m_pName;
 	};
@@ -61,6 +64,8 @@ namespace LD
 
 	protected:
 	};
+
+	const EventType WildCardEvent( "*" );
 }
 
 #endif // __LD_EVENTS_HPP__

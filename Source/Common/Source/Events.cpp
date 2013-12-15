@@ -34,6 +34,16 @@ namespace LD
 		return m_pName;
 	}
 
+	bool EventType::operator<( const EventType &p_Other ) const
+	{
+		return ( m_ID < p_Other.m_ID );
+	}
+
+	bool EventType::operator==( const EventType &p_Other ) const
+	{
+		return ( m_ID == p_Other.m_ID );
+	}
+
 	EventData::~EventData( )
 	{
 	}
