@@ -38,24 +38,26 @@ namespace LD
 	{
 	}
 
-	void EventData::SetDispatchTime( const LD_UINT64 p_DispatchTime )
-	{
-		m_DispatchTime = p_DispatchTime;
-	}
-
-	LD_UINT64 EventData::GetDispatchTime( ) const
-	{
-		return m_DispatchTime;
-	}
-
-	Event::Event( const LD_CHAR8 *p_pEventName, EventData *p_pEventData ) :
+	Event::Event( const LD_CHAR8 *p_pEventName, EventData *p_pEventData,
+		const LD_UINT64 p_DispatchTime ) :
 		m_Type( p_pEventName ),
-		m_pData( p_pEventData )
+		m_pData( p_pEventData ),
+		m_DispatchTime( p_DispatchTime )
 	{
 	}
 
 	Event::~Event( )
 	{
+	}
+
+	EventType Event::GetEventType( ) const
+	{
+		return m_Type;
+	}
+
+	bool Event::operator<( const Event &p_Event ) const
+	{
+		return ( m_DispatchTime > p_Event.m_DispatchTime );
 	}
 
 	EventListener::~EventListener( )

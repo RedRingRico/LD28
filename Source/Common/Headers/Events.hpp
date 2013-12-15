@@ -26,26 +26,30 @@ namespace LD
 	public:
 		virtual ~EventData( );
 
-		void SetDispatchTime( const LD_UINT64 p_DispatchTime = 0ULL );
-		LD_UINT64 GetDispatchTime( ) const;
-
 	protected:
-		LD_UINT64	m_DispatchTime;
 	};
 	
 	class Event
 	{
 	public:
 		LD_EXPLICIT Event( const LD_CHAR8 *p_EventName,
-			EventData *p_pEventData );
+			EventData *p_pEventData = LD_NULL,
+			const LD_UINT64 p_DispatchTime = 0ULL );
 		virtual ~Event( );
+
+		EventType GetEventType( ) const;
+
+		LD_UINT64 GetDispatchTime( ) const;
 
 		template< typename T > T* GetData( ) const
 			{ return reinterpret_cast < T* >( m_pData ); }
 
+		bool operator<( const Event &p_Event ) const;
+
 	protected:
 		EventType	m_Type;
 		EventData	*m_pData;
+		LD_UINT64	m_DispatchTime;
 	};
 
 	class EventListener
