@@ -57,5 +57,9 @@ namespace LD
 	Event::~Event( )
 	{
 	}
+
+	EventListener::~EventListener( )
+	{
+	}
 }
 

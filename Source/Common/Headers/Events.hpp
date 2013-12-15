@@ -47,6 +47,16 @@ namespace LD
 		EventType	m_Type;
 		EventData	*m_pData;
 	};
+
+	class EventListener
+	{
+	public:
+		virtual ~EventListener( );
+
+		virtual LD_BOOL HandleEvent( Event *p_pData ) = 0;
+
+	protected:
+	};
 }
 
 #endif // __LD_EVENTS_HPP__
