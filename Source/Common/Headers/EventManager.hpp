@@ -25,11 +25,11 @@ namespace LD
 			const EventType &p_EventType );
 		LD_UINT32 RemoveListener( EventListener * const &p_pListener );
 
-		LD_UINT32 SendEvent( const Event &p_pEvent );
+		LD_UINT32 SendEvent( const Event &p_Event );
 
 		void ProcessEvents( );
 
-		LD_UINT32 ValidateType( const EventType &p_Type,
+		LD_UINT32 ValidateEventType( const EventType &p_EventType,
 			LD_UINT32 *p_pInformation ) const;
 
 	private:

@@ -29,7 +29,7 @@ namespace LD
 	{
 		LD_UINT32 Information = 0;
 
-		if( this->ValidateType( p_EventType, &Information ) != LD_OK )
+		if( this->ValidateEventType( p_EventType, &Information ) != LD_OK )
 		{
 			SDL_LogError( SDL_LOG_CATEGORY_APPLICATION,
 				"[LD::EventManager::AddListener] Failed to verify event type "
@@ -101,20 +101,73 @@ namespace LD
 		return LD_OK;
 	}
 
-	LD_UINT32 EventManager::ValidateType( const EventType &p_EventType,
+	LD_UINT32 EventManager::SendEvent( const Event &p_Event )
+	{
+		LD_UINT32 Information = 0;
+
+		if( this->ValidateEventType( p_Event.GetEventType( ), &Information ) !=
+			LD_OK )
+		{
+			return LD_FAIL;
+		}
+
+		EventIDEventListenerMap::const_iterator IDListenerItr =
+			m_EventRegistry.find( LD::WildCardEvent.GetID( ) );
+
+		if( IDListenerItr != m_EventRegistry.end( ) )
+		{
+			const EventListenerList &ListenerList = IDListenerItr->second;
+			EventListenerList::const_iterator ListenerListItr =
+				ListenerList.begin( );
+
+			for( ; ListenerListItr != ListenerList.end( ); ++ListenerListItr )
+			{
+				( *ListenerListItr )->HandleEvent( p_Event );
+			}
+		}
+
+		IDListenerItr = m_EventRegistry.find(
+			p_Event.GetEventType( ).GetID( ) );
+
+		if( IDListenerItr == m_EventRegistry.end( ) )
+		{
+			return LD_FAIL;
+		}
+
+		const EventListenerList &ListenerList = IDListenerItr->second;
+
+		LD_BOOL EventProcessed = LD_FALSE;
+
+		EventListenerList::const_iterator IDListenerItr2 =
+			ListenerList.begin( );
+
+		for( ; IDListenerItr2 != ListenerList.end( ); ++IDListenerItr2 )
+		{
+			if( ( *IDListenerItr2 )->HandleEvent( p_Event ) == LD_TRUE )
+			{
+				EventProcessed = LD_TRUE;
+			}
+		}
+
+		return ( EventProcessed ? LD_OK : LD_FAIL );
+	}
+
+
+	LD_UINT32 EventManager::ValidateEventType( const EventType &p_EventType,
 		LD_UINT32 *p_pInformation ) const
 	{
 		if( p_EventType.GetName( ) == LD_NULL )
 		{
 			SDL_LogError( SDL_LOG_CATEGORY_APPLICATION,
-				"[LD::EventManager::ValidateType] Invalid name for event\n" );
+				"[LD::EventManager::ValidateEventType] Invalid name for "
+				"event\n" );
 
 			( *p_pInformation ) = EVENT_INVALIDNAME;
 
 			return LD_FAIL;
 		}
 
-		if( ( p_EventType.GetID( ) == 0 ) &&
+		if( ( p_EventType.GetID( ) == LD::WildCardEvent.GetID( ) ) &&
 			( strcmp( p_EventType.GetName( ), LD::WildCardEvent.GetName( ) )
 				!= 0 ) )
 		{
@@ -137,8 +190,9 @@ namespace LD
 			if( strcmp( p_EventType.GetName( ), OtherEvent.GetName( ) ) != 0 )
 			{
 				SDL_LogError( SDL_LOG_CATEGORY_APPLICATION,
-					"[LD::EventManager::ValidateType] Name collision between "
-					"stored event: \"%s\" [ %d ] and event being validated: "
+					"[LD::EventManager::ValidateEventType] Name collision "
+					"between stored event: \"%s\" [ %d ] and "
+					"event being validated: "
 					"\"%s\" [ %d ]\n",
 					OtherEvent.GetName( ), OtherEvent.GetID( ),
 					p_EventType.GetName( ), p_EventType.GetID( ) );
@@ -151,8 +205,9 @@ namespace LD
 		else
 		{
 			SDL_LogWarn( SDL_LOG_CATEGORY_APPLICATION,
-				"[LD::EventManager::ValidateType] Type \"%s\" [ %d ] already "
-				"in the set\n", p_EventType.GetName( ), p_EventType.GetID( ) );
+				"[LD::EventManager::ValidateEventType] Type \"%s\" [ %d ] "
+				"already in the set\n",
+				p_EventType.GetName( ), p_EventType.GetID( ) );
 
 			( *p_pInformation ) = EVENT_ALREADYINSET;
 		}

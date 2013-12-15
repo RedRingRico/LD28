@@ -60,7 +60,10 @@ namespace LD
 	public:
 		virtual ~EventListener( );
 
-		virtual LD_BOOL HandleEvent( Event *p_pData ) = 0;
+		virtual LD_BOOL HandleEvent(
+			const Event &p_Event ) = 0;
+
+		virtual LD_CHAR8 *GetName( ) const = 0;
 
 	protected:
 	};
