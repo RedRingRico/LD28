@@ -63,12 +63,12 @@ namespace LD
 		if( m_pTexture )
 		{
 			SDL_Rect Middle;
-			Middle.x = 640-32;
-			Middle.y = 320-32;
-			Middle.w = 64;
-			Middle.h = 64;
-			SDL_RenderCopy( m_pRenderer, m_pTexture, &m_TextureRectangle,
-				&Middle );
+			Middle.x = 0;
+			Middle.y = 0;
+			Middle.w = m_TextureWidth;
+			Middle.h = m_TextureHeight;
+			SDL_RenderCopy( m_pRenderer, m_pTexture, &Middle,
+				&m_TextureRectangle );
 		}
 	}
 }

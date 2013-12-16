@@ -204,11 +204,6 @@ namespace LD
 		}
 		else
 		{
-			SDL_LogWarn( SDL_LOG_CATEGORY_APPLICATION,
-				"[LD::EventManager::ValidateEventType] Type \"%s\" [ %d ] "
-				"already in the set\n",
-				p_EventType.GetName( ), p_EventType.GetID( ) );
-
 			( *p_pInformation ) = EVENT_ALREADYINSET;
 		}
 

@@ -7,6 +7,9 @@
 namespace LD
 {
 	class GameEntityManager;
+	class EventManager;
+	class InputListener;
+
 	class Game
 	{
 	public:
@@ -26,6 +29,8 @@ namespace LD
 		SDL_Window		*m_pWindow;
 
 		GameEntityManager	*m_pGameEntityManager;
+		EventManager		*m_pEventManager;
+		InputListener		*m_pInputListener;
 	};
 }
 

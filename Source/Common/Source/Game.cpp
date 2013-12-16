@@ -3,8 +3,10 @@
 #include <cstring>
 #include <cstdio>
 #include <GameEntityManager.hpp>
+#include <EventManager.hpp>
 #include <Player.hpp>
 #include <Time.hpp>
+#include <GameplayEvents.hpp>
 
 namespace LD
 {
@@ -12,6 +14,7 @@ namespace LD
 		m_pRenderer( LD_NULL ),
 		m_pWindow( LD_NULL ),
 		m_pGameEntityManager( LD_NULL ),
+		m_pEventManager( LD_NULL ),
 		m_Run( LD_TRUE )
 	{
 	}
@@ -46,6 +49,13 @@ namespace LD
 
 		m_pGameEntityManager = new GameEntityManager( );
 		m_pGameEntityManager->SetRenderer( m_pRenderer );
+
+		m_pEventManager = new EventManager( 2 );
+
+		m_pInputListener = new InputListener( );
+
+		m_pEventManager->AddListener( m_pInputListener,
+			KeyboardInputEventType );
 		
 		return LD_OK;
 	}
@@ -54,10 +64,21 @@ namespace LD
 	{
 		Player Hiro;
 		m_pGameEntityManager->AddEntity( &Hiro );
+		m_pInputListener->SetPlayer( &Hiro );
+		Hiro.SetMaxSpeed( 8 );
 
 		LD::Time Timer;
 		Timer.StartTimer( );
 
+		LD_UINT64 ElapsedTime = 0ULL;
+		LD_UINT64 TimeStep = 16667ULL;
+		LD_UINT64 PreviousTime = Timer.GetTimeInMicroseconds( );
+		LD_UINT64 FrameTime = PreviousTime;
+		LD_UINT32 FrameRate = 0;
+		LD_UINT64 Accumulator = 0ULL;
+/*		Uint8 *pPreviousKeys = new Uint8[ SDL_NUM_SCANCODES ];
+		memset( pPreviousKeys, 0, sizeof( Uint8 ) * SDL_NUM_SCANCODES );
+*/
 		while( m_Run )
 		{
 			SDL_Event Event;
@@ -69,15 +90,88 @@ namespace LD
 				}
 				if( Event.type == SDL_KEYDOWN )
 				{
+					KeyboardInputEventData KeyboardData;
+					KeyboardData.SetKeyScanCode( Event.key.keysym.scancode );
+					KeyboardData.SetKeyDown( );
+					if( Event.key.repeat )
+					{
+						SDL_Log( "KEY REPEATED\n" );
+						KeyboardData.SetKeyRepeat( );
+					}
+					KeyboardInputEvent Keyboard( &KeyboardData );
+
+					m_pEventManager->SendEvent( Keyboard );
 					if( Event.key.keysym.scancode == SDL_SCANCODE_ESCAPE )
 					{
 						m_Run = LD_FALSE;
 					}
 				}
+				if( Event.type == SDL_KEYUP )
+				{
+					KeyboardInputEventData KeyboardData;
+					KeyboardData.SetKeyScanCode( Event.key.keysym.scancode );
+					KeyboardData.SetKeyUp( );
+					KeyboardInputEvent Keyboard( &KeyboardData );
+
+					m_pEventManager->SendEvent( Keyboard );
+				}
+			}
+/*			SDL_PumpEvents( );
+			const Uint8 *pCurrentKeys = SDL_GetKeyboardState( NULL );
+
+			for( size_t i = 0; i < SDL_NUM_SCANCODES; ++i )
+			{
+				if( pCurrentKeys[ i ] != pPreviousKeys[ i ] )
+				{
+					KeyboardInputEventData KeyboardData;
+					SDL_Scancode Scan = ( SDL_Scancode )i;
+					KeyboardData.SetKeyScanCode( Scan );
+					if( pCurrentKeys[ i ] )
+					{
+						KeyboardData.SetKeyUp( );
+					}
+					else
+					{
+						KeyboardData.SetKeyDown( );
+					}
+					KeyboardInputEvent Keyboard( &KeyboardData );
+
+					m_pEventManager->SendEvent( Keyboard );				
+				}
 			}
 
-			this->Update( Timer.GetTimeInMicroseconds( ) );
+			memcpy( pPreviousKeys, pCurrentKeys,
+				sizeof( Uint8 ) * SDL_NUM_SCANCODES );*/
+
+			const LD_UINT64 NewTime = Timer.GetTimeInMicroseconds( );
+			LD_UINT64 DeltaTime = NewTime - PreviousTime;
+
+			if( DeltaTime > 250000ULL )
+			{
+				DeltaTime = 250000ULL;
+			}
+
+			PreviousTime = NewTime;
+
+			Accumulator += DeltaTime;
+
+			while( Accumulator >= TimeStep )
+			{
+				this->Update( TimeStep );
+				ElapsedTime += TimeStep;
+				Accumulator -= TimeStep;
+			}
+
 			this->Render( );
+
+			++FrameRate;
+
+			if( ( NewTime - FrameTime ) >= 1000000ULL )
+			{
+				SDL_Log( "FPS: %d\n", FrameRate );
+				FrameTime = Timer.GetTimeInMicroseconds( );
+				FrameRate = 0;
+			}
 		}
 
 		return LD_OK;

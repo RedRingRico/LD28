@@ -29,6 +29,7 @@ namespace LD
 			SDL_Log( "Failed to initialse game entity\n" );
 			return LD_FAIL;
 		}
+
 		LD_UINT32 Types = p_pEntity->GetType( );
 		
 		if( Types & LD_RENDERABLE_2D )

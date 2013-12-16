@@ -36,7 +36,7 @@ namespace LD
 	{
 	public:
 		LD_EXPLICIT Event( const LD_CHAR8 *p_EventName,
-			EventData *p_pEventData = LD_NULL,
+			EventData * const &p_pEventData = LD_NULL,
 			const LD_UINT64 p_DispatchTime = 0ULL );
 		virtual ~Event( );
 
@@ -50,7 +50,7 @@ namespace LD
 		bool operator<( const Event &p_Event ) const;
 
 	protected:
-		EventType	m_Type;
+		EventType	m_EventType;
 		EventData	*m_pData;
 		LD_UINT64	m_DispatchTime;
 	};
@@ -60,8 +60,7 @@ namespace LD
 	public:
 		virtual ~EventListener( );
 
-		virtual LD_BOOL HandleEvent(
-			const Event &p_Event ) = 0;
+		virtual LD_BOOL HandleEvent( const Event &p_Event ) = 0;
 
 		virtual LD_CHAR8 *GetName( ) const = 0;
 

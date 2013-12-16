@@ -48,9 +48,10 @@ namespace LD
 	{
 	}
 
-	Event::Event( const LD_CHAR8 *p_pEventName, EventData *p_pEventData,
+	Event::Event( const LD_CHAR8 *p_pEventName,
+		EventData * const &p_pEventData,
 		const LD_UINT64 p_DispatchTime ) :
-		m_Type( p_pEventName ),
+		m_EventType( p_pEventName ),
 		m_pData( p_pEventData ),
 		m_DispatchTime( p_DispatchTime )
 	{
@@ -62,7 +63,7 @@ namespace LD
 
 	EventType Event::GetEventType( ) const
 	{
-		return m_Type;
+		return m_EventType;
 	}
 
 	bool Event::operator<( const Event &p_Event ) const
